@@ -38,24 +38,23 @@ jobs:
           CORS_ALLOWED_ORIGINS: http://localhost
         run: |
           pytest --cov=. --cov-report=term-missing
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-#  build-and-deploy:
-#    needs: test
-#    runs-on: ubuntu-latest
-#    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#
-#      - name: Deploy to server
-#        uses: appleboy/ssh-action@v1.0.3
-#        with:
-#          host: ${{ secrets.SERVER_HOST }}
-#          username: ${{ secrets.SERVER_USER }}
-#          key: ${{ secrets.SERVER_SSH_KEY }}
-#          script: |
-#            cd /opt/iranlivan/backend
-#            git pull origin main
-#            cd /opt/iranlivan
-#            docker compose up -d --build backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /opt/livancups/backend
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519" git pull origin main
+            cd /opt/livancups
+            docker compose up -d --build backend
