@@ -40,8 +40,8 @@ class KavenegarSMSProvider(SMSProvider):
             "templateId": 570670,
             "parameters": [
                 {
-                    "name": code,
-                    "value": "12345"
+                    "name": "Code",
+                    "value": code
                 }
             ]
         }
