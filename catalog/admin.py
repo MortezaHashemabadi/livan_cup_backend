@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
-from .models import Category, Attribute, AttributeValue, CategoryAttribute, Product, ProductVariant, ProductImage
+from .models import Category, Attribute, AttributeValue, CategoryAttribute, Product, ProductVariant, ProductImage, \
+    VariantOptionChoice, VariantOptionGroup
 from pricing.models import PriceTier
 
 
@@ -43,26 +44,26 @@ class PriceTierInline(admin.TabularInline):
     extra = 1
 
 
-@admin.register(ProductVariant)
-class ProductVariantAdmin(admin.ModelAdmin):
-    form = ProductVariantAdminForm
-
-    list_display = [
-        'sku',
-        'display_attribute_values',
-        'product',
-        'stock_status',
-        'available_from'
-    ]
-
-    filter_horizontal = ['attribute_values', 'related_variants']
-    inlines = [PriceTierInline]
-
-    @admin.display(description="Attributes")
-    def display_attribute_values(self, obj):
-        return ", ".join(
-            value.value for value in obj.attribute_values.all()
-        )
+# @admin.register(ProductVariant)
+# class ProductVariantAdmin(admin.ModelAdmin):
+#     form = ProductVariantAdminForm
+#
+#     list_display = [
+#         'sku',
+#         'display_attribute_values',
+#         'product',
+#         'stock_status',
+#         'available_from'
+#     ]
+#
+#     filter_horizontal = ['attribute_values', 'related_variants']
+#     inlines = [PriceTierInline]
+#
+#     @admin.display(description="Attributes")
+#     def display_attribute_values(self, obj):
+#         return ", ".join(
+#             value.value for value in obj.attribute_values.all()
+#         )
 
 
 class ProductImageInline(admin.TabularInline):
@@ -96,3 +97,28 @@ class ProductImageAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'is_active']
     inlines = [ProductImageInline]
+
+class VariantOptionChoiceInline(admin.TabularInline):
+    model = VariantOptionChoice
+    extra = 1
+
+
+class VariantOptionGroupInline(admin.StackedInline):
+    model = VariantOptionGroup
+    extra = 1
+    inlines = [VariantOptionChoiceInline]  # جنگو nested inline نداره، جدا ثبت می‌کنیم
+
+
+@admin.register(VariantOptionGroup)
+class VariantOptionGroupAdmin(admin.ModelAdmin):
+    list_display = ['name', 'variant', 'is_required', 'order']
+    inlines = [VariantOptionChoiceInline]
+
+
+@admin.register(ProductVariant)
+class ProductVariantAdmin(admin.ModelAdmin):
+    form = ProductVariantAdminForm
+    list_display = ['sku', 'product', 'stock_status', 'is_listed','sales_count', 'is_active']
+    list_editable = ['is_listed']  # ← مستقیم از لیست تیک بزنی بدون باز کردن هر واریانت
+    filter_horizontal = ['attribute_values', 'related_variants']
+    inlines = [PriceTierInline, VariantOptionGroupInline]

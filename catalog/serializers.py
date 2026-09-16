@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Category, AttributeValue, Product, ProductVariant, ProductImage
+from .models import Category, AttributeValue, Product, ProductVariant, ProductImage, VariantOptionChoice, \
+    VariantOptionGroup
 from pricing.serializers import PriceTierSerializer
 
 
@@ -41,22 +42,53 @@ class RelatedVariantSerializer(serializers.ModelSerializer):
         return ProductImageSerializer(_resolve_variant_images(obj), many=True).data
 
 
+# class ProductVariantSerializer(serializers.ModelSerializer):
+#     attribute_values = AttributeValueSerializer(many=True, read_only=True)
+#     price_tiers = PriceTierSerializer(many=True, read_only=True)
+#     images = serializers.SerializerMethodField()
+#     related_variants = RelatedVariantSerializer(many=True, read_only=True)
+#
+#     class Meta:
+#         model = ProductVariant
+#         fields = [
+#             'id', 'sku', 'attribute_values', 'stock_status', 'available_from',
+#             'price_tiers', 'images', 'related_variants','created_at','is_designable'
+#         ]
+#
+#     def get_images(self, obj):
+#         return ProductImageSerializer(_resolve_variant_images(obj), many=True).data
+class VariantOptionChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VariantOptionChoice
+        fields = ['id', 'name', 'price_modifier', 'is_default', 'order']
+
+class VariantOptionGroupSerializer(serializers.ModelSerializer):
+    choices = VariantOptionChoiceSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = VariantOptionGroup
+        fields = ['id', 'name', 'is_required', 'choices']
+
 class ProductVariantSerializer(serializers.ModelSerializer):
     attribute_values = AttributeValueSerializer(many=True, read_only=True)
     price_tiers = PriceTierSerializer(many=True, read_only=True)
     images = serializers.SerializerMethodField()
     related_variants = RelatedVariantSerializer(many=True, read_only=True)
+    option_groups = VariantOptionGroupSerializer(many=True, read_only=True)
+    sales_count = serializers.IntegerField(read_only=True, default=0)
+    product_name = serializers.CharField(source='product.name', read_only=True)  # ← اضافه شد
+    product_slug = serializers.CharField(source='product.slug', read_only=True)  # ← اضافه شد
 
     class Meta:
         model = ProductVariant
         fields = [
             'id', 'sku', 'attribute_values', 'stock_status', 'available_from',
-            'price_tiers', 'images', 'related_variants','created_at','is_designable'
+            'price_tiers', 'images', 'related_variants', 'option_groups',
+            'sales_count', 'product_name', 'product_slug',  # ← اضافه شد
         ]
 
     def get_images(self, obj):
         return ProductImageSerializer(_resolve_variant_images(obj), many=True).data
-
 
 class ProductSerializer(serializers.ModelSerializer):
     variants = ProductVariantSerializer(many=True, read_only=True)

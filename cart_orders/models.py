@@ -25,6 +25,8 @@ class CartItem(models.Model):
         upload_to='cart_print_files/%Y/%m/', null=True, blank=True,
         validators=[FileExtensionValidator(['png', 'jpg', 'jpeg', 'webp', 'svg'])],
     )
+    selected_options = models.JSONField(default=list, blank=True)
+    # مثال: [{"group": "تعداد جداره", "choice_id": 3, "choice_name": "2 جداره", "price_modifier": 500}]
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -59,6 +61,7 @@ class OrderItem(models.Model):
     variant = models.ForeignKey(ProductVariant, on_delete=models.PROTECT, related_name='order_items')
     design = models.ForeignKey(Design, null=True, blank=True, on_delete=models.SET_NULL, related_name='order_items')
     print_file = models.ImageField(upload_to='order_print_files/%Y/%m/', null=True, blank=True)
+    selected_options = models.JSONField(default=list, blank=True)  # ← snapshot کامل موقع سفارش
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(max_digits=12, decimal_places=0)
     subtotal = models.DecimalField(max_digits=12, decimal_places=0)

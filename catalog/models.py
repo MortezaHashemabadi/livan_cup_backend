@@ -97,6 +97,8 @@ class ProductVariant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     related_variants = models.ManyToManyField('self', symmetrical=False, blank=True, related_name='related_to')
     is_designable = models.BooleanField(default=False)
+    is_listed = models.BooleanField(default=False)
+    sales_count = models.PositiveIntegerField(default=0, db_index=True)
 
     def __str__(self):
         values = ", ".join(
@@ -145,3 +147,35 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.order}"
+
+
+class VariantOptionGroup(models.Model):
+    """گروه آپشن: مثلاً «تعداد جداره» یا «طرح دیواره»"""
+    variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, related_name='option_groups')
+    name = models.CharField(max_length=100)  # "تعداد جداره"
+    is_required = models.BooleanField(default=True)
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+        unique_together = ('variant', 'name')
+
+    def __str__(self):
+        return f"{self.variant.sku} — {self.name}"
+
+
+class VariantOptionChoice(models.Model):
+    """انتخاب داخل گروه: مثلاً «2 جداره» با قیمت اضافه‌ی ۵۰۰ تومان"""
+    group = models.ForeignKey(VariantOptionGroup, on_delete=models.CASCADE, related_name='choices')
+    name = models.CharField(max_length=100)   # "2 جداره"
+    price_modifier = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    is_default = models.BooleanField(default=False)
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+        unique_together = ('group', 'name')
+
+    def __str__(self):
+        sign = "+" if self.price_modifier >= 0 else ""
+        return f"{self.name} ({sign}{self.price_modifier})"

@@ -1,7 +1,9 @@
 from django.core.files.base import ContentFile
+
+from catalog.models import ProductVariant
 from pricing.services import get_unit_price, validate_discount, calculate_discount_amount
 from .models import Order, OrderItem
-
+from django.db.models import F
 
 def create_order_from_cart(cart, address, notes=''):
     if not cart.items.exists():
@@ -40,7 +42,10 @@ def create_order_from_cart(cart, address, notes=''):
             quantity=item.quantity, unit_price=unit_price, subtotal=line_subtotal,
         )
         order_item.save()  # اول save کن تا ID بگیره
-
+        for item, _, _ in line_data:
+            ProductVariant.objects.filter(pk=item.variant.pk).update(
+                sales_count=F('sales_count') + item.quantity
+            )
         if item.print_file:
             try:
                 item.print_file.open('rb')

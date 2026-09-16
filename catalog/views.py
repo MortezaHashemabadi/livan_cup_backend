@@ -21,11 +21,32 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProductSerializer
     lookup_field = 'slug'
 
+    @action(detail=True, methods=['get'], url_path='listed-variants')
+    def listed_variants(self, request, slug=None):
+        """فقط واریانت‌هایی که is_listed=True دارن — برای صفحه‌ی لیست محصولات"""
+        product = self.get_object()
+        variants = product.variants.filter(is_active=True, is_listed=True)
+        return Response(ProductVariantSerializer(variants, many=True).data)
+
     def get_queryset(self):
         qs = super().get_queryset()
         category_slug = self.request.query_params.get('category')
         if category_slug:
-            qs = qs.filter(category__slug=category_slug)
+            from .models import Category
+            # پیدا کردن کتگوری انتخابی
+            try:
+                category = Category.objects.get(slug=category_slug)
+            except Category.DoesNotExist:
+                return qs.none()
+
+            # جمع‌آوری ID خودش + همه‌ی زیرمجموعه‌هاش (یه سطح)
+            category_ids = [category.id]
+            children_ids = list(
+                Category.objects.filter(parent=category).values_list('id', flat=True)
+            )
+            category_ids.extend(children_ids)
+
+            qs = qs.filter(category_id__in=category_ids)
         return qs
 
 
@@ -45,3 +66,12 @@ class ProductVariantViewSet(viewsets.ReadOnlyModelViewSet):
             is_active=True,
         ).distinct()
         return Response(ProductVariantSerializer(accessories, many=True).data)
+
+    @action(detail=False, methods=['get'], url_path='top-selling')
+    def top_selling(self, request):
+        variants = (
+            ProductVariant.objects.filter(is_active=True, sales_count__gt=0)
+            .select_related('product')  # ← مهمه
+            .order_by('-sales_count')[:10]
+        )
+        return Response(ProductVariantSerializer(variants, many=True).data)
