@@ -68,7 +68,6 @@ def create_order_from_cart(cart, address, notes=''):
     _notify_new_order(order)
     return order
 
-
 def _notify_new_order(order):
     phone = getattr(settings, 'ORDER_NOTIFICATION_PHONE', '')
     if not phone:

@@ -179,3 +179,23 @@ class VariantOptionChoice(models.Model):
     def __str__(self):
         sign = "+" if self.price_modifier >= 0 else ""
         return f"{self.name} ({sign}{self.price_modifier})"
+
+
+class ProductCard(models.Model):
+    name = models.CharField(max_length=255)
+    link = models.CharField(max_length=500)
+    primary_image = models.ImageField(upload_to='product_cards/%Y/%m/')
+    hover_image = models.ImageField(upload_to='product_cards/%Y/%m/', null=True, blank=True)
+    options = models.JSONField(default=list, blank=True)
+    filter_data = models.JSONField(default=dict, blank=True)
+    price_from = models.DecimalField(max_digits=12, decimal_places=0, null=True, blank=True)
+    price_to = models.DecimalField(max_digits=12, decimal_places=0, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='product_cards')
+    is_active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.name

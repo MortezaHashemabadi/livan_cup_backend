@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Category, AttributeValue, Product, ProductVariant, ProductImage, VariantOptionChoice, \
-    VariantOptionGroup
+    VariantOptionGroup, ProductCard
 from pricing.serializers import PriceTierSerializer
 
 
@@ -105,3 +105,12 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name', 'slug', 'parent', 'is_accessory', 'description', 'image']
+
+
+class ProductCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCard
+        fields = [
+            'id', 'name', 'link', 'primary_image', 'hover_image',
+            'options', 'filter_data', 'price_from', 'price_to', 'category',
+        ]

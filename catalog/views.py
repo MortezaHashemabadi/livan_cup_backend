@@ -1,8 +1,8 @@
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Category, Product, ProductVariant
-from .serializers import CategorySerializer, ProductSerializer, ProductVariantSerializer
+from .models import Category, Product, ProductVariant, ProductCard
+from .serializers import CategorySerializer, ProductSerializer, ProductVariantSerializer, ProductCardSerializer
 
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -75,3 +75,58 @@ class ProductVariantViewSet(viewsets.ReadOnlyModelViewSet):
             .order_by('-sales_count')[:10]
         )
         return Response(ProductVariantSerializer(variants, many=True).data)
+
+class ProductCardViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    lookup_field = 'slug'
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProductCardSerializer
+        return ProductSerializer
+
+    def get_queryset(self):
+        if self.action == 'list':
+            return ProductCard.objects.filter(is_active=True)
+        return (
+            Product.objects.filter(is_active=True)
+            .select_related('category')
+            .prefetch_related(
+                'images',
+                'variants__price_tiers',
+                'variants__attribute_values__attribute',
+                'variants__option_groups__choices',
+                'variants__related_variants__attribute_values__attribute',
+                'variants__related_variants__images',
+            )
+        )
+
+    def list(self, request, *args, **kwargs):
+        qs = ProductCard.objects.filter(is_active=True)
+
+        category_slug = request.query_params.get('category')
+        if category_slug:
+            try:
+                category = Category.objects.get(slug=category_slug)
+                category_ids = [category.id] + list(
+                    Category.objects.filter(parent=category).values_list('id', flat=True)
+                )
+                qs = qs.filter(category_id__in=category_ids)
+            except Category.DoesNotExist:
+                qs = qs.none()
+
+        for key, value in request.query_params.items():
+            if key in ('category', 'ordering'):
+                continue
+            qs = qs.filter(filter_data__contains={key: value})
+
+        ordering = request.query_params.get('ordering')
+        if ordering == 'price_asc':
+            qs = qs.order_by('price_from')
+        elif ordering == 'price_desc':
+            qs = qs.order_by('-price_from')
+        else:
+            qs = qs.order_by('order')
+
+        serializer = ProductCardSerializer(qs, many=True, context={'request': request})
+        return Response(serializer.data)

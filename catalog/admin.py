@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from .models import Category, Attribute, AttributeValue, CategoryAttribute, Product, ProductVariant, ProductImage, \
-    VariantOptionChoice, VariantOptionGroup
+    VariantOptionChoice, VariantOptionGroup, ProductCard
 from pricing.models import PriceTier
 
 
@@ -122,3 +122,9 @@ class ProductVariantAdmin(admin.ModelAdmin):
     list_editable = ['is_listed']  # ← مستقیم از لیست تیک بزنی بدون باز کردن هر واریانت
     filter_horizontal = ['attribute_values', 'related_variants']
     inlines = [PriceTierInline, VariantOptionGroupInline]
+
+
+@admin.register(ProductCard)
+class ProductCardAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category', 'price_from', 'price_to', 'is_active', 'order']
+    list_editable = ['is_active', 'order']
