@@ -84,7 +84,7 @@ class ProductVariantSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'sku', 'attribute_values', 'stock_status', 'available_from',
             'price_tiers', 'images', 'related_variants', 'option_groups',
-            'sales_count', 'product_name', 'product_slug',  # ← اضافه شد
+            'sales_count', 'product_name', 'product_slug','is_listed',
         ]
 
     def get_images(self, obj):

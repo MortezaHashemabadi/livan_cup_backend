@@ -190,3 +190,5 @@ LOGGING = {
         },
     },
 }
+
+ORDER_NOTIFICATION_PHONE = env('ORDER_NOTIFICATION_PHONE', default='')

@@ -1,9 +1,10 @@
 from django.core.files.base import ContentFile
-
+from django.conf import settings
 from catalog.models import ProductVariant
 from pricing.services import get_unit_price, validate_discount, calculate_discount_amount
 from .models import Order, OrderItem
 from django.db.models import F
+from accounts.services.sms import get_sms_provider
 
 def create_order_from_cart(cart, address, notes=''):
     if not cart.items.exists():
@@ -42,10 +43,9 @@ def create_order_from_cart(cart, address, notes=''):
             quantity=item.quantity, unit_price=unit_price, subtotal=line_subtotal,
         )
         order_item.save()  # اول save کن تا ID بگیره
-        for item, _, _ in line_data:
-            ProductVariant.objects.filter(pk=item.variant.pk).update(
-                sales_count=F('sales_count') + item.quantity
-            )
+        ProductVariant.objects.filter(pk=item.variant.pk).update(
+            sales_count=F('sales_count') + item.quantity
+        )
         if item.print_file:
             try:
                 item.print_file.open('rb')
@@ -65,4 +65,16 @@ def create_order_from_cart(cart, address, notes=''):
     cart.discount = None
     cart.save(update_fields=['discount'])
 
+    _notify_new_order(order)
     return order
+
+
+def _notify_new_order(order):
+    phone = getattr(settings, 'ORDER_NOTIFICATION_PHONE', '')
+    if not phone:
+        return
+    try:
+        message = f"سفارش جدید 1375"
+        get_sms_provider().send_otp(phone, message)
+    except Exception:
+        pass
