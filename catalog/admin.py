@@ -118,10 +118,10 @@ class VariantOptionGroupAdmin(admin.ModelAdmin):
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
     form = ProductVariantAdminForm
-    list_display = ['sku', 'product', 'stock_status', 'is_listed','sales_count', 'is_active']
-    list_editable = ['is_listed']  # ← مستقیم از لیست تیک بزنی بدون باز کردن هر واریانت
+    list_display = ['id','sku', 'product', 'stock_status','sales_count', 'is_active']
     filter_horizontal = ['attribute_values', 'related_variants']
     inlines = [PriceTierInline, VariantOptionGroupInline]
+    search_fields = ['sku']
 
 
 @admin.register(ProductCard)
