@@ -1,0 +1,290 @@
+[
+{
+  "model": "catalog.productcard",
+  "pk": 1,
+  "fields": {
+    "name": "لیوان کاغذی کرافت 60cc",
+    "link": "/products/paper_cup?variant=1",
+    "primary_image": "product_cards/2026/09/Gemini_Generated_Image_o8o5tgo8o5tgo8o5.jpg",
+    "hover_image": "product_cards/2026/09/photo_2026-09-14_20-33-13.jpg",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "تک جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "60cc",
+      "جنس": "کرافت"
+    },
+    "price_from": "4800",
+    "price_to": "4300",
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+},
+{
+  "model": "catalog.productcard",
+  "pk": 2,
+  "fields": {
+    "name": "لیوان کاغذی گلاسه 60cc",
+    "link": "https://bagcup.ir/products/paper_cup?variant=3",
+    "primary_image": "product_cards/2026/09/photo_2026-09-14_20-33-13_iZztNPI.jpg",
+    "hover_image": "",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "تک جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "60cc",
+      "جنس": "گلاسه"
+    },
+    "price_from": "4800",
+    "price_to": "4300",
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+},
+{
+  "model": "catalog.productcard",
+  "pk": 3,
+  "fields": {
+    "name": "لیوان کاغذی گلاسه 120cc",
+    "link": "https://bagcup.ir/products/paper_cup?variant=4",
+    "primary_image": "product_cards/2026/09/photo_2026-09-14_20-33-13_uVZmWpU.jpg",
+    "hover_image": "",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "تک جداره",
+          "دو جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "120cc",
+      "جنس": "گلاسه"
+    },
+    "price_from": "6000",
+    "price_to": null,
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+},
+{
+  "model": "catalog.productcard",
+  "pk": 4,
+  "fields": {
+    "name": "لیوان کاغذی کرافت 120cc",
+    "link": "https://bagcup.ir/products/paper_cup?variant=2",
+    "primary_image": "product_cards/2026/09/photo_2026-09-14_20-33-13_2SNPZcL.jpg",
+    "hover_image": "",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "تک جداره",
+          "دو جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "120cc",
+      "جنس": "کرافت"
+    },
+    "price_from": "6000",
+    "price_to": null,
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+},
+{
+  "model": "catalog.productcard",
+  "pk": 5,
+  "fields": {
+    "name": "لیوان کاغذی گلاسه 220cc",
+    "link": "https://bagcup.ir/products/paper_cup?variant=7",
+    "primary_image": "product_cards/2026/09/photo_2026-09-14_20-33-13_UXm1IT5.jpg",
+    "hover_image": "",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "تک جداره",
+          "دو جداره",
+          "سه جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "220cc",
+      "جنس": "گلاسه"
+    },
+    "price_from": "8400",
+    "price_to": null,
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+},
+{
+  "model": "catalog.productcard",
+  "pk": 6,
+  "fields": {
+    "name": "لیوان کاغذی کرافت 220cc",
+    "link": "https://bagcup.ir/products/paper_cup?variant=8",
+    "primary_image": "product_cards/2026/09/photo_2026-09-14_20-33-13_403YYZN.jpg",
+    "hover_image": "",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "تک جداره",
+          "دو جداره",
+          "سه جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "220cc",
+      "جنس": "کرافت"
+    },
+    "price_from": "8400",
+    "price_to": null,
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+},
+{
+  "model": "catalog.productcard",
+  "pk": 7,
+  "fields": {
+    "name": "لیوان کاغذی گلاسه 360cc",
+    "link": "https://bagcup.ir/products/paper_cup?variant=13",
+    "primary_image": "product_cards/2026/09/photo_2026-09-14_20-33-13_bOMWFR9.jpg",
+    "hover_image": "",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "دو جداره",
+          "سه جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "360cc",
+      "جنس": "گلاسه"
+    },
+    "price_from": "15000",
+    "price_to": null,
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+},
+{
+  "model": "catalog.productcard",
+  "pk": 8,
+  "fields": {
+    "name": "لیوان کاغذی کرافت 360cc",
+    "link": "https://bagcup.ir/products/paper_cup?variant=14",
+    "primary_image": "product_cards/2026/09/photo_2026-09-14_20-33-13_VvGsO7X.jpg",
+    "hover_image": "",
+    "options": [
+      {
+        "slug": "wall-type",
+        "label": "ساختار دیواره",
+        "values": [
+          "دو جداره",
+          "سه جداره"
+        ]
+      },
+      {
+        "slug": "surface",
+        "label": "سطح بیرونی",
+        "values": [
+          "ساده"
+        ]
+      }
+    ],
+    "filter_data": {
+      "حجم": "360cc",
+      "جنس": "کرافت"
+    },
+    "price_from": "15000",
+    "price_to": null,
+    "category": 2,
+    "is_active": true,
+    "order": 0
+  }
+}
+]

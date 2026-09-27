@@ -22,7 +22,7 @@ class CartItemSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'variant', 'variant_detail', 'product_name', 'product_slug',
             'design', 'print_file', 'quantity', 'unit_price', 'subtotal',
-            'selected_options', 'selected_option_ids',
+            'selected_options', 'selected_option_ids','fabric_color','print_color',
         ]
         read_only_fields = ['selected_options']
 
@@ -138,7 +138,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'variant', 'variant_detail', 'product_name', 'product_slug', 'design', 'print_file', 'quantity', 'unit_price', 'subtotal']
+        fields = ['id', 'variant', 'variant_detail', 'product_name', 'product_slug', 'design', 'print_file', 'quantity', 'unit_price', 'subtotal','fabric_color','print_color',]
 
 
 class OrderSerializer(serializers.ModelSerializer):

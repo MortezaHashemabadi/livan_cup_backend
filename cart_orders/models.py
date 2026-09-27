@@ -29,6 +29,8 @@ class CartItem(models.Model):
     # مثال: [{"group": "تعداد جداره", "choice_id": 3, "choice_name": "2 جداره", "price_modifier": 500}]
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
+    fabric_color = models.CharField(max_length=100, blank=True)
+    print_color = models.CharField(max_length=100, blank=True)
 
 
 class OrderStatus(models.TextChoices):
@@ -65,3 +67,5 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(max_digits=12, decimal_places=0)
     subtotal = models.DecimalField(max_digits=12, decimal_places=0)
+    fabric_color = models.CharField(max_length=100, blank=True)
+    print_color = models.CharField(max_length=100, blank=True)
