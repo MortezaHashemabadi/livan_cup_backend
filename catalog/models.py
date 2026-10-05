@@ -11,6 +11,7 @@ class Category(models.Model):
     is_active = models.BooleanField(default=True)
     description = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to='categories/', blank=True, null=True)
+    price_table_axes = models.JSONField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -68,6 +69,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    features = models.JSONField(default=list, blank=True)
     is_designable = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):

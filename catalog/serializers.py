@@ -98,13 +98,13 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'slug', 'description', 'category', 'category_slug', 'variants', 'images', 'is_designable']
+        fields = ['id', 'name', 'slug', 'description', 'category','features', 'category_slug', 'variants', 'images', 'is_designable']
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'slug', 'parent', 'is_accessory', 'description', 'image']
+        fields = ['id', 'name', 'slug', 'parent', 'is_accessory', 'description', 'image', 'price_table_axes']
 
 
 class ProductCardSerializer(serializers.ModelSerializer):

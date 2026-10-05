@@ -25,6 +25,7 @@ class CategoryAttributeInline(admin.TabularInline):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'parent', 'is_accessory', 'is_active']
     inlines = [CategoryAttributeInline]
+    fields = ['name', 'slug', 'parent', 'is_accessory', 'is_active', 'description', 'image', 'price_table_axes']
 
 
 class ProductVariantAdminForm(forms.ModelForm):
@@ -97,6 +98,7 @@ class ProductImageAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'is_active']
     inlines = [ProductImageInline]
+    fields = ['name', 'slug', 'category', 'description', 'features', 'is_active']
 
 class VariantOptionChoiceInline(admin.TabularInline):
     model = VariantOptionChoice
