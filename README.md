@@ -1,6 +1,6 @@
 # LivanCup Backend
 
-بک‌اند Django REST Framework برای [iranlivan.ir](https://iranlivan.ir) — فروشگاه آنلاین لیوان و ظروف قابل سفارشی‌سازی با طراحی هوش مصنوعی.
+بک‌اند Django  REST Framework برای [iranlivan.ir](https://iranlivan.ir) — فروشگاه آنلاین لیوان و ظروف قابل سفارشی‌سازی با طراحی هوش مصنوعی.
 
 ## ویژگی‌ها
 
